@@ -9,12 +9,9 @@ import { setSideDrawer } from '../../actions/sideDrawerAction';
 import style from './scss/Landing.module.scss';
 import SideDrawer from '../side-drawer/SideDrawer';
 
-const Landing = ({ setSideDrawer }) => {
-	const [isShowArrow, setIsShowArrow] = useState(true);
-
+const Landing = ({ setSideDrawer, isOpen }) => {
 	const handleClickArrow = () => {
 		setSideDrawer(true);
-		setIsShowArrow(false);
 	};
 
 	return (
@@ -22,7 +19,7 @@ const Landing = ({ setSideDrawer }) => {
 			<SideDrawer />
 			<div className={style.Landing}>
 				<i
-					className={`${style.Arrow} ${!isShowArrow ? style.HideArrow : ''} fa fa-arrow-right fa-2x`}
+					className={`${style.Arrow} ${isOpen ? style.HideArrow : ''} fa fa-arrow-right fa-2x`}
 					aria-hidden="true"
 					onClick={handleClickArrow}
 				></i>
@@ -37,6 +34,11 @@ const Landing = ({ setSideDrawer }) => {
 
 Landing.propTypes = {
 	setSideDrawer: PropTypes.func.isRequired,
+	isOpen: PropTypes.bool.isRequired,
 };
 
-export default connect(null, { setSideDrawer })(Landing);
+const mapStateToProps = (state) => ({
+	isOpen: state.sideDrawer.isOpen,
+});
+
+export default connect(mapStateToProps, { setSideDrawer })(Landing);

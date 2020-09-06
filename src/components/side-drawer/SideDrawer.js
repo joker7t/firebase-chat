@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import style from './scss/SideDrawer.module.scss';
 import UserItem from './UserItem';
+import Search from './Search';
 
-const SideDrawer = ({ isOpen }) => {
-	const showUserItems = () => <UserItem isOpen={isOpen} />;
+const SideDrawer = ({ isOpen, mustOpen }) => {
+	const [statusOpen, setStatusOpen] = useState(false);
 
-	return <div className={`${style.SideDrawer} ${isOpen ? style.Open : ''}`}>{showUserItems()}</div>;
+	useEffect(() => {
+		if (mustOpen) {
+			setStatusOpen(true);
+		} else {
+			if (isOpen) {
+				setStatusOpen(true);
+			}
+		}
+	}, [isOpen, mustOpen]);
+
+	const showUserItems = () => <UserItem isOpen={statusOpen} />;
+
+	return (
+		<div className={`${style.SideDrawer} ${statusOpen ? style.Open : ''}`}>
+			<Search />
+			{showUserItems()}
+		</div>
+	);
 };
 
 SideDrawer.propTypes = {

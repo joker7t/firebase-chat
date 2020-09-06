@@ -1,0 +1,10 @@
+@import '../../../asserts/colors';
+@import '../../../asserts/transition';
+
+.UserSideDrawer {
+	height: 100%;
+	width: 6px;
+	border: 3px solid $color-secondary;
+	cursor: pointer;
+	width: 300px;
+}
