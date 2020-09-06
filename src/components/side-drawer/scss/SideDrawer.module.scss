@@ -5,8 +5,8 @@
 	height: 100%;
 	width: 6px;
 	border: 3px solid $color-secondary;
+	margin-right: 2px;
 	@include transition(0.5s all ease-in-out);
-	cursor: pointer;
 
 	&.Open {
 		width: 300px;

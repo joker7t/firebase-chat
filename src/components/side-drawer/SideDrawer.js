@@ -22,7 +22,7 @@ const SideDrawer = ({ isOpen, mustOpen }) => {
 
 	return (
 		<div className={`${style.SideDrawer} ${statusOpen ? style.Open : ''}`}>
-			<Search />
+			<Search isOpen={statusOpen} />
 			{showUserItems()}
 		</div>
 	);

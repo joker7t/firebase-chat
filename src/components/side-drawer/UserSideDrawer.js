@@ -7,7 +7,7 @@ const UserSideDrawer = () => {
 	const showUserItems = () => <UserItem isOpen={true} />;
 	return (
 		<div className={style.UserSideDrawer}>
-			<Search />
+			<Search isOpen={true} />
 			{showUserItems()}
 		</div>
 	);

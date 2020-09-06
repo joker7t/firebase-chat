@@ -1,0 +1,29 @@
+@import '../../../asserts/colors';
+
+.Container {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column;
+
+	.Title {
+		color: $color-primary;
+		margin-bottom: 2rem;
+	}
+
+	.Register {
+		width: 400px;
+
+		.ErrorMessage {
+			color: red;
+			margin-bottom: 3px;
+		}
+
+		.SubmitButton {
+			display: block;
+			width: 100%;
+		}
+	}
+}
