@@ -12,7 +12,6 @@ function App() {
 		<Provider store={store}>
 			<Router>
 				<div className={style.App}>
-					<SideDrawer />
 					<div className={style.AppContent}>
 						<Route exact path={LANDING_PATH} component={Landing} />
 					</div>
