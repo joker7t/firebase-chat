@@ -1,0 +1,11 @@
+@import './asserts/colors';
+
+// import Boostrap and custom it
+// change the theme
+$theme-colors: (
+	'primary': $color-primary,
+);
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+//end Bootstrap
