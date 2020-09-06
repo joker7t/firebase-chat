@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { LANDING_PATH } from './asserts/links';
+import { LANDING_PATH, CHAT_PATH } from './asserts/links';
 import Landing from './components/landing/Landing';
-import SideDrawer from './components/side-drawer/SideDrawer';
+import Chat from './components/chat/Chat';
 import store from './store';
 import { Provider } from 'react-redux';
 import style from './App.module.scss';
@@ -14,6 +14,7 @@ function App() {
 				<div className={style.App}>
 					<div className={style.AppContent}>
 						<Route exact path={LANDING_PATH} component={Landing} />
+						<Route exact path={CHAT_PATH} component={Chat} />
 					</div>
 				</div>
 			</Router>
