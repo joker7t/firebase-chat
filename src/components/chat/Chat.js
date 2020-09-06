@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from './scss/Chat.module.scss';
 import Header from './Header';
 import UserSideDrawer from '../side-drawer/UserSideDrawer';
 import ChatMessages from './ChatMessages';
 import ChatInput from './ChatInput';
 import UserDetails from './UserDetails';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { REGISTER } from '../../asserts/links';
 
-const Chat = () => {
+const Chat = ({ history, signInUser }) => {
+	useEffect(() => {
+		if (signInUser === null) {
+			history.push(REGISTER);
+		}
+
+		//eslint-disable-next-line
+	}, [signInUser]);
+
 	return (
 		<div className={style.Chat}>
 			<Header />
@@ -22,4 +33,12 @@ const Chat = () => {
 	);
 };
 
-export default Chat;
+Chat.propTypes = {
+	signInUser: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+	signInUser: state.auth.user,
+});
+
+export default connect(mapStateToProps, null)(Chat);

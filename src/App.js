@@ -8,12 +8,18 @@ import { Provider } from 'react-redux';
 import style from './App.module.scss';
 import firebase from './firebase';
 import Register from './components/auth/Register';
+import { SET_USER } from './actions/type';
 
 const App = () => {
 	useEffect(() => {
-		firebase.auth().onAuthStateChanged((signedInUser) => {
-			console.log(signedInUser);
+		firebase.auth().onAuthStateChanged(async (signedInUser) => {
+			store.dispatch({
+				type: SET_USER,
+				payload: signedInUser,
+			});
 		});
+
+		//eslint-disable-next-line
 	}, []);
 
 	return (

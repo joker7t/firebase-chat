@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import style from './scss/Register.module.scss';
 import { Form, Button } from 'react-bootstrap';
 import firebase from '../../firebase';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { LANDING_PATH } from '../../asserts/links';
 
-const Register = ({ history }) => {
+const Register = ({ history, signInUser }) => {
 	const [registerData, setRegisterData] = useState({
 		email: '',
 		password: '',
@@ -18,6 +21,15 @@ const Register = ({ history }) => {
 		message: '',
 	});
 	// const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		console.log(signInUser);
+		if (signInUser !== null) {
+			history.push(LANDING_PATH);
+		}
+
+		//eslint-disable-next-line
+	}, [signInUser]);
 
 	const handleChange = (e) => {
 		setRegisterData({ ...registerData, [e.target.name]: e.target.value });
@@ -42,7 +54,7 @@ const Register = ({ history }) => {
 			//no need to wait this method
 			// this.saveUser(createdUser);
 
-			history.push('/');
+			history.push(LANDING_PATH);
 		} catch (e) {
 			setError({
 				code: e.code,
@@ -90,4 +102,12 @@ const Register = ({ history }) => {
 	);
 };
 
-export default Register;
+Register.propTypes = {
+	signInUser: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+	signInUser: state.auth.user,
+});
+
+export default connect(mapStateToProps, null)(Register);
