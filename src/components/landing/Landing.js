@@ -8,6 +8,7 @@ import style from './scss/Landing.module.scss';
 const Landing = () => {
 	return (
 		<div className={style.Landing}>
+			<i className={`${style.Arrow} fa fa-arrow-right fa-2x`} aria-hidden="true"></i>
 			<Header />
 			<SubHeader />
 			<LandingContent />

@@ -1,7 +1,32 @@
+@import '../../../asserts/colors';
+@import '../../../asserts/transition';
+
 .Landing {
 	width: 100%;
 	height: 100%;
 	min-height: 100vh;
 	display: flex;
 	flex-flow: column;
+	position: relative;
+
+	.Arrow {
+		position: absolute;
+		top: 50%;
+		left: 10px;
+		@include translateY(-50%);
+		@include animation(arrow 1s ease-in-out infinite);
+		cursor: pointer;
+	}
+}
+
+@include keyframes(arrow) {
+	0% {
+		left: 5px;
+	}
+	50% {
+		left: 10px;
+	}
+	100% {
+		left: 5px;
+	}
 }

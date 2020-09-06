@@ -1,0 +1,53 @@
+@mixin transition($args...) {
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	-o-transition: $args;
+	transition: $args;
+}
+
+@mixin transform($trans) {
+	transform: $trans;
+	-webkit-transform: $trans;
+	-moz-transform: $trans;
+	-ms-transform: $trans;
+	-o-transform: $trans;
+}
+
+@mixin translateY($vertical) {
+	transform: translateY($vertical);
+	-webkit-transform: translateY($vertical);
+	-moz-transform: translateY($vertical);
+	-ms-transform: translateY($vertical);
+	-o-transform: translateY($vertical);
+}
+
+@mixin animation($animate...) {
+	$max: length($animate);
+	$animations: '';
+	@for $i from 1 through $max {
+		$animations: #{$animations + nth($animate, $i)};
+		@if $i < $max {
+			$animations: #{$animations + ', '};
+		}
+	}
+	-webkit-animation: $animations;
+	-moz-animation: $animations;
+	-o-animation: $animations;
+	animation: $animations;
+}
+
+@mixin keyframes($animationName) {
+	@-webkit-keyframes #{$animationName} {
+		@content;
+	}
+	@-moz-keyframes #{$animationName} {
+		@content;
+	}
+	@-o-keyframes #{$animationName} {
+		@content;
+	}
+	@keyframes #{$animationName} {
+		@content;
+	}
+}
