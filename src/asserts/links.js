@@ -1,1 +1,1 @@
-export const LANDING_PATH = '/landing';
+export const LANDING_PATH = '/';

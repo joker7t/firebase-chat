@@ -9,3 +9,13 @@ $theme-colors: (
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 //end Bootstrap
+
+body {
+	box-sizing: border-box;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	width: 100%;
+	min-height: 100vh;
+}

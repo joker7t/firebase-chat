@@ -1,0 +1,8 @@
+@import '../../../asserts/colors';
+
+.Footer {
+	border: 2px solid $color-primary;
+	padding: 0.5rem;
+	text-align: center;
+	color: $color-primary;
+}

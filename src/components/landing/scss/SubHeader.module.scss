@@ -1,0 +1,9 @@
+@import '../../../asserts/colors';
+
+.SubHeader {
+	border: 2px solid $color-primary;
+	padding: 0.5rem;
+	text-align: center;
+	color: $color-primary;
+	margin-top: 3px;
+}
