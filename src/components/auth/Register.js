@@ -23,7 +23,6 @@ const Register = ({ history, signInUser }) => {
 	// const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		console.log(signInUser);
 		if (signInUser !== null) {
 			history.push(LANDING_PATH);
 		}
@@ -36,6 +35,13 @@ const Register = ({ history, signInUser }) => {
 		setError({
 			code: '',
 			message: '',
+		});
+	};
+
+	const saveUser = (createdUser) => {
+		return firebase.database().ref('users').child(createdUser.user.uid).set({
+			name: createdUser.user.displayName,
+			avatar: createdUser.user.photoURL,
 		});
 	};
 
@@ -52,8 +58,7 @@ const Register = ({ history, signInUser }) => {
 			});
 			// console.log(createdUser);
 			//no need to wait this method
-			// this.saveUser(createdUser);
-
+			saveUser(createdUser);
 			history.push(LANDING_PATH);
 		} catch (e) {
 			setError({

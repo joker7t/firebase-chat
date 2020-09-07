@@ -4,25 +4,41 @@ import PropTypes from 'prop-types';
 import style from './scss/SideDrawer.module.scss';
 import UserItem from './UserItem';
 import Search from './Search';
+import firebase from '../../firebase';
 
-const SideDrawer = ({ isOpen, mustOpen }) => {
+const SideDrawer = ({ isOpen, user }) => {
 	const [statusOpen, setStatusOpen] = useState(false);
+	const [users, setUsers] = useState([]);
+	const [filteredUsers, setFilteredUsers] = useState([]);
+
+	const usersRef = firebase.database().ref('users');
 
 	useEffect(() => {
-		if (mustOpen) {
-			setStatusOpen(true);
-		} else {
-			if (isOpen) {
-				setStatusOpen(true);
+		const userId = user && user.uid;
+		let loadedUsers = [];
+		usersRef.on('child_added', (snap) => {
+			console.log(snap.val());
+			if (userId !== snap.key) {
+				loadedUsers.push(snap.val());
 			}
-		}
-	}, [isOpen, mustOpen]);
+		});
+		setUsers(loadedUsers);
+		setFilteredUsers(loadedUsers);
 
-	const showUserItems = () => <UserItem isOpen={statusOpen} />;
+		//eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (isOpen) {
+			setStatusOpen(true);
+		}
+	}, [isOpen]);
+
+	const showUserItems = () => filteredUsers.map((user, i) => <UserItem user={user} isOpen={statusOpen} key={i} />);
 
 	return (
 		<div className={`${style.SideDrawer} ${statusOpen ? style.Open : ''}`}>
-			<Search isOpen={statusOpen} />
+			<Search isOpen={statusOpen} setFilteredUsers={setFilteredUsers} users={users} />
 			{showUserItems()}
 		</div>
 	);
@@ -34,6 +50,7 @@ SideDrawer.propTypes = {
 
 const mapStateToProps = (state) => ({
 	isOpen: state.sideDrawer.isOpen,
+	user: state.auth.user,
 });
 
 export default connect(mapStateToProps, null)(SideDrawer);

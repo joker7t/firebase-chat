@@ -16,10 +16,17 @@
 
 	.Left {
 		width: 30%;
+		img {
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
 	}
 
 	.Right {
 		flex-grow: 1;
+		margin-left: 3px;
 		.Name {
 			color: $color-secondary;
 		}

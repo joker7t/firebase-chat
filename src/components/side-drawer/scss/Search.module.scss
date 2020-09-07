@@ -6,8 +6,26 @@
 	border-bottom: 1px solid #222;
 	@include transform(scaleX(0));
 	@include transition(0.5s all ease-in-out);
+	display: flex;
 
 	&.Open {
 		@include transform(scaleX(1));
+	}
+
+	input {
+		height: 100%;
+		flex-grow: 1;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	i {
+		height: 100%;
+		width: 50px;
+		padding-left: 10px;
+		padding-top: 7px;
+		cursor: pointer;
 	}
 }

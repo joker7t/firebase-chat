@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './scss/UserSideDrawer.module.scss';
 import UserItem from './UserItem';
 import Search from './Search';
+import firebase from '../../firebase';
+import { connect } from 'react-redux';
 
-const UserSideDrawer = () => {
-	const showUserItems = () => <UserItem isOpen={true} />;
+const UserSideDrawer = ({ user }) => {
+	const [users, setUsers] = useState([]);
+	const [filteredUsers, setFilteredUsers] = useState([]);
+
+	const usersRef = firebase.database().ref('users');
+
+	useEffect(() => {
+		const userId = user && user.uid;
+		let loadedUsers = [];
+		usersRef.on('child_added', (snap) => {
+			console.log(snap.val());
+			if (userId !== snap.key) {
+				loadedUsers.push(snap.val());
+			}
+		});
+		setUsers(loadedUsers);
+		setFilteredUsers(loadedUsers);
+
+		//eslint-disable-next-line
+	}, []);
+
+	const showUserItems = () => filteredUsers.map((user, i) => <UserItem user={user} isOpen={true} key={i} />);
+
 	return (
 		<div className={style.UserSideDrawer}>
-			<Search isOpen={true} />
+			<Search isOpen={true} setFilteredUsers={setFilteredUsers} users={users} />
 			{showUserItems()}
 		</div>
 	);
 };
 
-export default UserSideDrawer;
+const mapStateToProps = (state) => ({
+	user: state.auth.user,
+});
+
+export default connect(mapStateToProps, null)(UserSideDrawer);
