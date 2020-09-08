@@ -6,7 +6,7 @@ import ChatMessages from './ChatMessages';
 import ChatInput from './ChatInput';
 import UserDetails from './UserDetails';
 import { connect } from 'react-redux';
-import { REGISTER } from '../../asserts/links';
+import { REGISTER, LANDING_PATH } from '../../asserts/links';
 import firebase from '../../firebase';
 import firebaseLooper from '../../asserts/firebaseLooper';
 
@@ -17,6 +17,9 @@ const Chat = ({ history, signInUser, message }) => {
 	useEffect(() => {
 		if (signInUser === null) {
 			history.push(REGISTER);
+		}
+		if (message === null || message.toUser === null) {
+			history.push(LANDING_PATH);
 		}
 		//eslint-disable-next-line
 	}, [signInUser]);
@@ -33,7 +36,7 @@ const Chat = ({ history, signInUser, message }) => {
 	}, []);
 
 	useEffect(() => {
-		// setMessages([]);
+		setMessages([]);
 		let loadedMessages = [];
 		messageRef.child(buildMessageId()).on('child_added', (messageNode) => {
 			loadedMessages.push(messageNode.val());
@@ -44,7 +47,7 @@ const Chat = ({ history, signInUser, message }) => {
 	}, [message]);
 
 	const buildMessageId = () => {
-		if (signInUser) {
+		if (signInUser && message && message.toUser) {
 			return signInUser.uid < message.toUser.uid
 				? `${signInUser.uid}/${message.toUser.uid}`
 				: `${message.toUser.uid}/${signInUser.uid}`;
@@ -58,7 +61,7 @@ const Chat = ({ history, signInUser, message }) => {
 			<div className={style.Content}>
 				<UserSideDrawer mustOpen={true} history={history} />
 				<div className={style.MessageContainer}>
-					<UserDetails />
+					<UserDetails toUser={message.toUser} />
 					<ChatMessages messages={messages} />
 					<ChatInput
 						user={signInUser}

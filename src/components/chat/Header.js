@@ -6,7 +6,9 @@ import { LANDING_PATH } from '../../asserts/links';
 const Header = () => {
 	return (
 		<div className={style.Header}>
-			<Link to={LANDING_PATH}>Back</Link>
+			<Link to={LANDING_PATH}>
+				<i className="fa fa-arrow-circle-left fa-2x"></i>
+			</Link>
 		</div>
 	);
 };

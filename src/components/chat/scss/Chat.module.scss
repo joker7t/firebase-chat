@@ -5,6 +5,7 @@
 	height: 100vh;
 	display: flex;
 	flex-flow: column;
+	background-image: linear-gradient(rgba($color-secondary, 0.5), rgba($color-primary, 0.5));
 
 	.Content {
 		flex-grow: 1;

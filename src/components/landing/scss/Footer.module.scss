@@ -3,6 +3,11 @@
 .Footer {
 	border: 2px solid $color-primary;
 	padding: 0.5rem;
-	text-align: center;
+	text-align: right;
 	color: $color-primary;
+
+	i {
+		color: #222;
+		margin: 0 20px;
+	}
 }

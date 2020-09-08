@@ -6,4 +6,10 @@
 	text-align: center;
 	color: $color-primary;
 	margin-top: 3px;
+	display: flex;
+	justify-content: center;
+
+	div {
+		margin: 0 20px;
+	}
 }

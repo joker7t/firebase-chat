@@ -5,6 +5,7 @@ import firebase from '../../firebase';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { LANDING_PATH } from '../../asserts/links';
+import md5 from 'md5';
 
 const Register = ({ history, signInUser }) => {
 	const [registerData, setRegisterData] = useState({
@@ -20,7 +21,6 @@ const Register = ({ history, signInUser }) => {
 		code: '',
 		message: '',
 	});
-	// const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		if (signInUser !== null) {
@@ -54,18 +54,28 @@ const Register = ({ history, signInUser }) => {
 				.createUserWithEmailAndPassword(registerData.email, registerData.password);
 			await createdUser.user.updateProfile({
 				displayName: registerData.email,
-				photoURL: `http://gravatar.com/avatar/${createdUser.user.email}?d=identicon`,
+				photoURL: `http://gravatar.com/avatar/${md5(createdUser.user.email)}?d=identicon`,
 			});
 			// console.log(createdUser);
 			//no need to wait this method
 			saveUser(createdUser);
 			history.push(LANDING_PATH);
 		} catch (e) {
-			setError({
-				code: e.code,
-				message: e.message,
-			});
-			console.log(e);
+			if (e.code === 'auth/email-already-in-use') {
+				firebase
+					.auth()
+					.signInWithEmailAndPassword(registerData.email, registerData.password)
+					.then((signedInUser) => {
+						saveUser(signedInUser);
+						history.push(LANDING_PATH);
+					});
+			} else {
+				setError({
+					code: e.code,
+					message: e.message,
+				});
+				console.log(e);
+			}
 		}
 		// setIsLoading(false);
 	};
