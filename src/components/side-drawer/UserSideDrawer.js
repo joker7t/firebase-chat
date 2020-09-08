@@ -5,7 +5,7 @@ import Search from './Search';
 import firebase from '../../firebase';
 import { connect } from 'react-redux';
 
-const UserSideDrawer = ({ user }) => {
+const UserSideDrawer = ({ user, history }) => {
 	const [users, setUsers] = useState([]);
 	const [filteredUsers, setFilteredUsers] = useState([]);
 
@@ -15,9 +15,11 @@ const UserSideDrawer = ({ user }) => {
 		const userId = user && user.uid;
 		let loadedUsers = [];
 		usersRef.on('child_added', (snap) => {
-			console.log(snap.val());
 			if (userId !== snap.key) {
-				loadedUsers.push(snap.val());
+				loadedUsers.push({
+					...snap.val(),
+					uid: snap.key,
+				});
 			}
 		});
 		setUsers(loadedUsers);
@@ -26,7 +28,10 @@ const UserSideDrawer = ({ user }) => {
 		//eslint-disable-next-line
 	}, []);
 
-	const showUserItems = () => filteredUsers.map((user, i) => <UserItem user={user} isOpen={true} key={i} />);
+	const showUserItems = () =>
+		filteredUsers.map((user, i) => (
+			<UserItem isChangeView={false} history={history} user={user} isOpen={true} key={i} />
+		));
 
 	return (
 		<div className={style.UserSideDrawer}>

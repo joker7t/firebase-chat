@@ -6,7 +6,7 @@ import UserItem from './UserItem';
 import Search from './Search';
 import firebase from '../../firebase';
 
-const SideDrawer = ({ isOpen, user }) => {
+const SideDrawer = ({ isOpen, user, history }) => {
 	const [statusOpen, setStatusOpen] = useState(false);
 	const [users, setUsers] = useState([]);
 	const [filteredUsers, setFilteredUsers] = useState([]);
@@ -17,9 +17,11 @@ const SideDrawer = ({ isOpen, user }) => {
 		const userId = user && user.uid;
 		let loadedUsers = [];
 		usersRef.on('child_added', (snap) => {
-			console.log(snap.val());
 			if (userId !== snap.key) {
-				loadedUsers.push(snap.val());
+				loadedUsers.push({
+					...snap.val(),
+					uid: snap.key,
+				});
 			}
 		});
 		setUsers(loadedUsers);
@@ -34,7 +36,10 @@ const SideDrawer = ({ isOpen, user }) => {
 		}
 	}, [isOpen]);
 
-	const showUserItems = () => filteredUsers.map((user, i) => <UserItem user={user} isOpen={statusOpen} key={i} />);
+	const showUserItems = () =>
+		filteredUsers.map((user, i) => (
+			<UserItem history={history} isChangeView={true} user={user} isOpen={statusOpen} key={i} />
+		));
 
 	return (
 		<div className={`${style.SideDrawer} ${statusOpen ? style.Open : ''}`}>

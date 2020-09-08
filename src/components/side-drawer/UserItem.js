@@ -1,11 +1,20 @@
 import React from 'react';
 import style from './scss/UserItem.module.scss';
-import { Link } from 'react-router-dom';
 import { CHAT_PATH } from '../../asserts/links';
+import { connect } from 'react-redux';
+import { setMessageUser } from '../../actions/messageAction';
 
-const UserItem = ({ isOpen, user }) => {
+const UserItem = ({ isOpen, user, isChangeView, history, setMessageUser }) => {
+	const handleClick = () => {
+		setMessageUser(user);
+
+		if (isChangeView) {
+			history.push(`${CHAT_PATH}/${user.uid}`);
+		}
+	};
+
 	return (
-		<Link to={CHAT_PATH} className={`${style.UserItem} ${isOpen ? style.Open : ''}`}>
+		<div onClick={handleClick} className={`${style.UserItem} ${isOpen ? style.Open : ''}`}>
 			<div className={style.Left}>
 				<img src={user.avatar} alt={user.name} />
 			</div>
@@ -13,8 +22,8 @@ const UserItem = ({ isOpen, user }) => {
 				<div className={style.Name}>{user.name}</div>
 				<div className={style.Status}>{user.name}</div>
 			</div>
-		</Link>
+		</div>
 	);
 };
 
-export default UserItem;
+export default connect(null, { setMessageUser })(UserItem);

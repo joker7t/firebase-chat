@@ -29,7 +29,7 @@ const App = () => {
 					<div className={style.AppContent}>
 						<Switch>
 							<Route exact path={LANDING_PATH} component={Landing} />
-							<Route exact path={CHAT_PATH} component={Chat} />
+							<Route exact path={`${CHAT_PATH}/:toUserId`} component={Chat} />
 							<Route exact path={REGISTER} component={Register} />
 							<Redirect to="/" />
 						</Switch>

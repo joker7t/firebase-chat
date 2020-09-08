@@ -25,7 +25,7 @@ const Landing = ({ setSideDrawer, isOpen, history, signInUser }) => {
 
 	return (
 		<div className={style.Container}>
-			<SideDrawer />
+			<SideDrawer history={history} />
 			<div className={style.Landing}>
 				<i
 					className={`${style.Arrow} ${isOpen ? style.HideArrow : ''} fa fa-arrow-right fa-2x`}
