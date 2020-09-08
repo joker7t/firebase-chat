@@ -2,7 +2,7 @@ import React from 'react';
 import style from './scss/UserItem.module.scss';
 import { CHAT_PATH } from '../../asserts/links';
 import { connect } from 'react-redux';
-import { setMessageUser } from '../../actions/messageAction';
+import { setMessageUser, setMessages } from '../../actions/messageAction';
 
 const UserItem = ({ isOpen, user, isChangeView, history, setMessageUser }) => {
 	const handleClick = () => {
@@ -26,4 +26,8 @@ const UserItem = ({ isOpen, user, isChangeView, history, setMessageUser }) => {
 	);
 };
 
-export default connect(null, { setMessageUser })(UserItem);
+const mapStateToProps = (state) => ({
+	signInUser: state.auth.user,
+});
+
+export default connect(mapStateToProps, { setMessageUser, setMessages })(UserItem);
