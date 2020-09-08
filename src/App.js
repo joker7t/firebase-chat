@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { LANDING_PATH, CHAT_PATH, REGISTER } from './asserts/links';
 import Landing from './components/landing/Landing';
@@ -11,18 +11,23 @@ import Register from './components/auth/Register';
 import { SET_USER } from './actions/type';
 
 const App = () => {
+	const [isLoading, setIsLoading] = useState(true);
+
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged(async (signedInUser) => {
 			store.dispatch({
 				type: SET_USER,
 				payload: signedInUser,
 			});
+			setIsLoading(false);
 		});
 
 		//eslint-disable-next-line
 	}, []);
 
-	return (
+	return isLoading ? (
+		<div></div>
+	) : (
 		<Provider store={store}>
 			<Router>
 				<div className={style.App}>

@@ -33,12 +33,12 @@ const Chat = ({ history, signInUser, message }) => {
 	}, []);
 
 	useEffect(() => {
+		// setMessages([]);
 		let loadedMessages = [];
 		messageRef.child(buildMessageId()).on('child_added', (messageNode) => {
 			loadedMessages.push(messageNode.val());
 			setMessages(loadedMessages);
 		});
-		console.log(loadedMessages);
 
 		//eslint-disable-next-line
 	}, [message]);
@@ -49,7 +49,7 @@ const Chat = ({ history, signInUser, message }) => {
 				? `${signInUser.uid}/${message.toUser.uid}`
 				: `${message.toUser.uid}/${signInUser.uid}`;
 		}
-		return '';
+		return 'dummy';
 	};
 
 	return (
@@ -60,7 +60,12 @@ const Chat = ({ history, signInUser, message }) => {
 				<div className={style.MessageContainer}>
 					<UserDetails />
 					<ChatMessages messages={messages} />
-					<ChatInput user={signInUser} messageId={buildMessageId()} />
+					<ChatInput
+						user={signInUser}
+						messageId={buildMessageId()}
+						messages={messages}
+						setMessages={setMessages}
+					/>
 				</div>
 			</div>
 		</div>

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import style from './scss/ChatInput.module.scss';
 import firebase from '../../firebase';
 
-const ChatInput = ({ messageId, user }) => {
+const ChatInput = ({ messageId, user, messages, setMessages }) => {
 	const messageRef = firebase.database().ref('messages');
-	const [message, setMessage] = useState('');
+	const [messageText, setMessageText] = useState('');
 
 	const handleChange = (e) => {
-		setMessage(e.target.value);
+		setMessageText(e.target.value);
 	};
 
 	const createMessage = () => {
@@ -19,25 +19,38 @@ const ChatInput = ({ messageId, user }) => {
 				avatar: user.photoURL,
 			},
 		};
-		messageObj['content'] = message;
+		messageObj['content'] = messageText;
 		return messageObj;
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (message !== '') {
+		if (messageText !== '') {
 			try {
 				await messageRef.child(messageId).push().set(createMessage());
+				setMessages([...messages, createMessage()]);
 			} catch (error) {
 				console.log(error);
 			}
-			setMessage('');
+			setMessageText('');
+			setTimeout(() => {
+				const messageContent = document.querySelector('#messageContent');
+				if (messageContent !== null) {
+					messageContent.scrollTop = messageContent.scrollHeight;
+				}
+			}, 1);
 		}
 	};
 
 	return (
 		<form onSubmit={handleSubmit} className={style.Container}>
-			<input className={style.ChatInput} type="text" name="message" value={message} onChange={handleChange} />
+			<input
+				className={style.ChatInput}
+				type="text"
+				name="messageText"
+				value={messageText}
+				onChange={handleChange}
+			/>
 			<button type="submit">send</button>
 		</form>
 	);

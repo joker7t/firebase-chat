@@ -20,11 +20,10 @@ const UserSideDrawer = ({ user, history }) => {
 					...snap.val(),
 					uid: snap.key,
 				});
+				setUsers(loadedUsers);
+				setFilteredUsers(loadedUsers);
 			}
 		});
-		setUsers(loadedUsers);
-		setFilteredUsers(loadedUsers);
-
 		//eslint-disable-next-line
 	}, []);
 

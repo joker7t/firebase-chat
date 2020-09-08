@@ -1,0 +1,23 @@
+@import '../../../asserts/colors';
+
+.Message {
+	display: flex;
+	width: 100%;
+	margin: 15px;
+
+	.Avatar {
+		width: 100px;
+	}
+
+	.Content {
+		flex-grow: 1;
+		padding: 0 10px;
+		color: $color-secondary;
+	}
+
+	&.Self {
+		.Content {
+			text-align: right;
+		}
+	}
+}

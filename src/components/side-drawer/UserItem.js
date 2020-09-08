@@ -20,7 +20,7 @@ const UserItem = ({ isOpen, user, isChangeView, history, setMessageUser }) => {
 			</div>
 			<div className={style.Right}>
 				<div className={style.Name}>{user.name}</div>
-				<div className={style.Status}>{user.name}</div>
+				<div className={style.Status}>Online</div>
 			</div>
 		</div>
 	);
